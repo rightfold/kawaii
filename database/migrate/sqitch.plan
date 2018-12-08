@@ -1,0 +1,5 @@
+%syntax-version=1.0.0
+%project=kawaii
+
+schema 2018-12-08T19:59:31Z r <r@chloe-notebook> # Add schema for kawaii
+tickets 2018-12-08T20:00:28Z r <r@chloe-notebook> # Add table for tickets
