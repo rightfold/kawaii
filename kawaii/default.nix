@@ -13,5 +13,8 @@ stdenv.mkDerivation {
     '';
     installPhase = ''
         mkdir "$out"
+        cp 'boot/index.php' "$out"
+        cp -R 'src' "$out"
+        cp -R 'vendor' "$out"
     '';
 }
