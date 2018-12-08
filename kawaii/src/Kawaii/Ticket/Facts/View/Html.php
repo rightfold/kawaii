@@ -1,19 +1,19 @@
 <?php
 declare(strict_types = 1);
-namespace Kawaii\Ticket\Facts;
+namespace Kawaii\Ticket\Facts\View;
 
 use Kawaii\Ticket\Html as BaseHtml;
 
 /**
- * Ticket facts HTML templates.
+ * HTML template of the use case <em>View ticket facts</em>.
  */
 final class Html extends BaseHtml {
-    /** @var string The facts. */
-    public $facts;
+    /** @var string */
+    public $ticketFacts;
 
-    public function __construct(string $ticketTitle, string $facts) {
-        parent::__construct($ticketTitle);
-        $this->facts = $facts;
+    public function __construct(Model $model) {
+        parent::__construct($model->ticketTitle);
+        $this->ticketFacts = $model->ticketFacts;
     }
 
     /** @return iterable<int,string> */
@@ -23,7 +23,7 @@ final class Html extends BaseHtml {
 
     public function renderTicketPageBody(): void {
         echo '<pre>';
-        echo \htmlentities($this->facts);
+        echo \htmlentities($this->ticketFacts);
         echo '</pre>';
     }
 }
