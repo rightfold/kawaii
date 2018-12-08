@@ -12,7 +12,7 @@ final class Html extends BaseHtml {
     public $ticketFacts;
 
     public function __construct(Model $model) {
-        parent::__construct($model->ticketTitle);
+        parent::__construct($model->ticketTitle, self::TICKET_PAGE_FACTS);
         $this->ticketFacts = $model->ticketFacts;
     }
 
