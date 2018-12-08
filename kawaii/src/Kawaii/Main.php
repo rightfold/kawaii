@@ -3,17 +3,39 @@ declare(strict_types = 1);
 namespace Kawaii;
 
 final class Main {
-    private function __construct() {
+    public function main(): void {
+        /** @var string */
+        $requestUri = $_SERVER['REQUEST_URI'];
+        $requestPath = \explode('?', $requestUri, 2)[0];
+
+        switch ($requestPath) {
+        case '/view-ticket-facts': $this->viewTicketFacts(); break;
+        default: $this->respondNotFound(); break;
+        }
     }
 
-    public static function main(): void {
-        $database = new Database\Connection('host=localhost user=kawaii_application password=kawaii_application dbname=kawaii');
-        $view = new Ticket\Facts\View($database);
+    public function viewTicketFacts(): void {
+        $ticketId = (string)$_GET['ticketId'];
 
-        $ticketId = 'bae4ec89-927b-4a67-b72a-c9722359e401';
-        $model = $view->viewTicketFacts($ticketId);
-        assert($model != NULL);
+        $database = new Database\Connection('host=localhost user=kawaii_application password=kawaii_application dbname=kawaii');
+        $ticketFactsView = new Ticket\Facts\View($database);
+        $model = $ticketFactsView->viewTicketFacts($ticketId);
+
+        if ($model === NULL) {
+            $this->respondNotFound();
+            return;
+        }
+
         $template = new Ticket\Facts\View\Html($model);
+        $this->respondOk($template);
+    }
+
+    public function respondOk(Html $template): void {
         $template->renderPage();
+    }
+
+    public function respondNotFound(): void {
+        \header('HTTP/1.1 404 Not Found');
+        echo 'Not found';
     }
 }
