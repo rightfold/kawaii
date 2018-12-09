@@ -20,7 +20,7 @@ final class WebPost implements BaseWeb {
         $model = $this->createTicket->createTicket($ticketTitle, $ticketFacts);
 
         \header('HTTP/1.1 303 See Other');
-        \header('Location: /view-ticket-facts?ticketId=' . $model->ticketId);
+        \header('Location: /viewTicketFacts?ticketId=' . $model->ticketId);
 
         return self::STATUS_HANDLED;
     }

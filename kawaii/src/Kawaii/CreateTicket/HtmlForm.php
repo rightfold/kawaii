@@ -14,7 +14,7 @@ final class HtmlForm extends Html {
     }
 
     public function renderPageBody(): void {
-        echo '<form method="post" action="/create-ticket">';
+        echo '<form method="post" action="/createTicket">';
         echo '<input type="text" name="title">';
         echo '<textarea name="facts"></textarea>';
         echo '<button>Submit</button>';

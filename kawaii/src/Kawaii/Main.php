@@ -44,9 +44,9 @@ final class Main {
         $requestPath = \explode('?', $requestUri, 2)[0];
 
         switch ($requestMethod . $requestPath) {
-        case 'GET/create-ticket':     $status = $this->createTicketWebForm->handle(); break;
-        case 'POST/create-ticket':    $status = $this->createTicketWebPost->handle(); break;
-        case 'GET/view-ticket-facts': $status = $this->viewTicketFactsWeb->handle(); break;
+        case 'GET/createTicket':    $status = $this->createTicketWebForm->handle(); break;
+        case 'POST/createTicket':   $status = $this->createTicketWebPost->handle(); break;
+        case 'GET/viewTicketFacts': $status = $this->viewTicketFactsWeb->handle(); break;
         default: $status = Web::STATUS_NOT_FOUND; break;
         }
 
