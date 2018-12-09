@@ -21,20 +21,13 @@ final class ListTickets {
      */
     public function listTickets(): iterable {
         $tickets = $this->database->query('
-            SELECT
-                sub.id,
-                sub.title
+            SELECT sub.ticket_id, sub.title
             FROM (
-                SELECT
-                    tickets.id,
-                    ticket_revisions.title,
-                    rank() OVER most_recent
-                FROM kawaii.tickets
-                JOIN kawaii.ticket_revisions
-                    ON ticket_revisions.ticket_id = tickets.id
+                SELECT ticket_id, title, rank() OVER most_recent
+                FROM kawaii.ticket_revisions
                 WINDOW most_recent AS (
-                    PARTITION BY tickets.id
-                    ORDER BY ticket_revisions.revision DESC
+                    PARTITION BY ticket_id
+                    ORDER BY revision DESC
                 )
             ) AS sub
             WHERE sub.rank = 1
