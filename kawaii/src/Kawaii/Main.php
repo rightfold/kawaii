@@ -18,6 +18,12 @@ final class Main {
     /** @var Web */
     private $createTicketWebPost;
 
+    /** @var ListTickets */
+    private $listTickets;
+
+    /** @var Web */
+    private $listTicketsWeb;
+
     /** @var ViewTicketFacts */
     private $viewTicketFacts;
 
@@ -30,6 +36,9 @@ final class Main {
         $this->createTicket = new CreateTicket($this->database);
         $this->createTicketWebForm = new CreateTicket\WebForm();
         $this->createTicketWebPost = new CreateTicket\WebPost($this->createTicket);
+
+        $this->listTickets = new ListTickets($this->database);
+        $this->listTicketsWeb = new ListTickets\Web($this->listTickets);
 
         $this->viewTicketFacts = new ViewTicketFacts($this->database);
         $this->viewTicketFactsWeb = new ViewTicketFacts\Web($this->viewTicketFacts);
@@ -46,6 +55,7 @@ final class Main {
         switch ($requestMethod . $requestPath) {
         case 'GET/createTicket':    $status = $this->createTicketWebForm->handle(); break;
         case 'POST/createTicket':   $status = $this->createTicketWebPost->handle(); break;
+        case 'GET/listTickets':     $status = $this->listTicketsWeb->handle(); break;
         case 'GET/viewTicketFacts': $status = $this->viewTicketFactsWeb->handle(); break;
         default: $status = Web::STATUS_NOT_FOUND; break;
         }
