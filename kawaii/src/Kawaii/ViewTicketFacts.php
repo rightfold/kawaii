@@ -10,7 +10,7 @@ use Kawaii\ViewTicketFacts\Model;
  */
 final class ViewTicketFacts {
     /** @var Database\Connection */
-    public $database;
+    private $database;
 
     public function __construct(Database\Connection $database) {
         $this->database = $database;

@@ -10,10 +10,10 @@ abstract class TicketHtml extends Html {
     public const TICKET_PAGE_DISCUSSION = 1;
 
     /** @var string The title of the ticket. */
-    public $ticketTitle;
+    private $ticketTitle;
 
     /** @var int The page we're on. Must be one of the constants. */
-    public $page;
+    private $page;
 
     public function __construct(string $ticketTitle, int $page) {
         $this->ticketTitle = $ticketTitle;

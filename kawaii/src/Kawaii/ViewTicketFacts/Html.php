@@ -9,7 +9,7 @@ use Kawaii\Common\TicketHtml;
  */
 final class Html extends TicketHtml {
     /** @var string */
-    public $ticketFacts;
+    private $ticketFacts;
 
     public function __construct(Model $model) {
         parent::__construct($model->ticketTitle, self::TICKET_PAGE_FACTS);

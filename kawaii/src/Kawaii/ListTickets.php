@@ -10,7 +10,7 @@ use Kawaii\ListTickets\Model;
  */
 final class ListTickets {
     /** @var Database\Connection */
-    public $database;
+    private $database;
 
     public function __construct(Database\Connection $database) {
         $this->database = $database;

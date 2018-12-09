@@ -11,7 +11,7 @@ use Kawaii\Utility\Uuid;
  */
 final class CreateTicket {
     /** @var Database\Connection */
-    public $database;
+    private $database;
 
     public function __construct(Database\Connection $database) {
         $this->database = $database;

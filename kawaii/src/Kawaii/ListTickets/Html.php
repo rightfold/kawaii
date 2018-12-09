@@ -9,7 +9,7 @@ use Kawaii\Common\Html as BaseHtml;
  */
 final class Html extends BaseHtml {
     /** @var iterable<int,Model> */
-    public $model;
+    private $model;
 
     /** @param iterable<int,Model> $model */
     public function __construct(iterable $model) {
