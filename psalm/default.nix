@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, makeWrapper, php }:
+{ stdenv, fetchurl, php }:
 stdenv.mkDerivation {
     name = "psalm";
     src = fetchurl {
@@ -6,7 +6,6 @@ stdenv.mkDerivation {
         sha256 = "0am5pjrnxbr5cpjb5555dq9z2b0szc1ps7srqdnfpqz49xshcl50";
     };
     buildInputs = [
-        makeWrapper
         php
     ];
     unpackPhase = ''
@@ -19,7 +18,8 @@ stdenv.mkDerivation {
         mkdir -p "$out/bin"
         (
             echo '#!/bin/sh'
-            echo "exec '${php}/bin/php' '$out/lib/psalm.phar' "'"$@"'
+            echo 'export PATH="$PATH:${php}/bin"'
+            echo "exec php '$out/lib/psalm.phar' "'"$@"'
         ) >> "$out/bin/psalm"
         chmod +x "$out/bin/psalm"
     '';
