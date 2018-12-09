@@ -8,6 +8,10 @@ use Throwable;
  * Thin wrapper around pgsql with types.
  */
 final class Connection {
+    public const READ_COMMITTED = 'READ COMMITTED';
+
+    public const READ_WRITE = 'READ WRITE';
+
     public const SQLSTATE_CHECK_VIOLATION = '23514';
 
     /** @var resource */
@@ -15,6 +19,31 @@ final class Connection {
 
     public function __construct(string $connstr) {
         $this->raw = \pg_connect($connstr);
+    }
+
+    /**
+     * Call the given function in a transaction.
+     *
+     * @template T
+     * @param callable():T $thunk
+     * @return T
+     */
+    public function inTransaction(string $isolationLevel, string $mode, callable $thunk) {
+        assert($isolationLevel === self::READ_COMMITTED);
+        assert($mode === self::READ_WRITE);
+        $this->execute("
+            START TRANSACTION
+                ISOLATION LEVEL $isolationLevel
+                $mode
+        ", []);
+        try {
+            $result = $thunk();
+        } catch (Throwable $ex) {
+            $this->execute('ROLLBACK WORK', []);
+            throw $ex;
+        }
+        $this->execute('COMMIT WORK', []);
+        return $result;
     }
 
     /**

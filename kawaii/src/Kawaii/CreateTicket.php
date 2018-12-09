@@ -32,14 +32,20 @@ final class CreateTicket {
 
     private function createTicketInternal(string $ticketTitle, string $ticketFacts): Model {
         $ticketId = Uuid::generateV4();
-        $this->database->execute('
-            INSERT INTO kawaii.tickets (id)
-            VALUES ($1)
-        ', [$ticketId]);
-        $this->database->execute('
-            INSERT INTO kawaii.ticket_revisions (ticket_id, revision, title, facts)
-            VALUES ($1, 1, $2, $3)
-        ', [$ticketId, $ticketTitle, $ticketFacts]);
+        $this->database->inTransaction(
+            Database\Connection::READ_COMMITTED,
+            Database\Connection::READ_WRITE,
+            function() use($ticketId, $ticketTitle, $ticketFacts): void {
+                $this->database->execute('
+                    INSERT INTO kawaii.tickets (id)
+                    VALUES ($1)
+                ', [$ticketId]);
+                $this->database->execute('
+                    INSERT INTO kawaii.ticket_revisions (ticket_id, revision, title, facts)
+                    VALUES ($1, 1, $2, $3)
+                ', [$ticketId, $ticketTitle, $ticketFacts]);
+            }
+        );
         return new Model($ticketId);
     }
 }
