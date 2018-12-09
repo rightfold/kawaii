@@ -14,6 +14,15 @@ final class Connection {
     }
 
     /**
+     * Query the database, ignoring rows.
+     *
+     * @param (?string)[] $arguments
+     */
+    public function execute(string $statement, array $arguments): void {
+        \pg_query_params($this->raw, $statement, $arguments);
+    }
+
+    /**
      * Query the database, yielding rows.
      *
      * @param (?string)[] $arguments
