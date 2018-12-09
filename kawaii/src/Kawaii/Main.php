@@ -3,41 +3,37 @@ declare(strict_types = 1);
 namespace Kawaii;
 
 use Kawaii\Common\Html;
+use Kawaii\Common\Web;
 
 final class Main {
+    /** @var Database\Connection */
+    private $database;
+
+    /** @var ViewTicketFacts */
+    private $viewTicketFacts;
+
+    /** @var Web */
+    private $viewTicketFactsWeb;
+
+    public function __construct() {
+        $this->database = new Database\Connection('host=localhost user=kawaii_application password=kawaii_application dbname=kawaii');
+        $this->viewTicketFacts = new ViewTicketFacts($this->database);
+        $this->viewTicketFactsWeb = new ViewTicketFacts\Web($this->viewTicketFacts);
+    }
+
     public function main(): void {
         /** @var string */
         $requestUri = $_SERVER['REQUEST_URI'];
         $requestPath = \explode('?', $requestUri, 2)[0];
 
         switch ($requestPath) {
-        case '/view-ticket-facts': $this->viewTicketFacts(); break;
-        default: $this->respondNotFound(); break;
-        }
-    }
-
-    public function viewTicketFacts(): void {
-        $ticketId = (string)$_GET['ticketId'];
-
-        $database = new Database\Connection('host=localhost user=kawaii_application password=kawaii_application dbname=kawaii');
-        $ticketFactsView = new ViewTicketFacts($database);
-        $model = $ticketFactsView->viewTicketFacts($ticketId);
-
-        if ($model === NULL) {
-            $this->respondNotFound();
-            return;
+        case '/view-ticket-facts': $status = $this->viewTicketFactsWeb->handle(); break;
+        default: $status = Web::STATUS_NOT_FOUND; break;
         }
 
-        $template = new ViewTicketFacts\Html($model);
-        $this->respondOk($template);
-    }
-
-    public function respondOk(Html $template): void {
-        $template->renderPage();
-    }
-
-    public function respondNotFound(): void {
-        \header('HTTP/1.1 404 Not Found');
-        echo 'Not found';
+        if ($status !== Web::STATUS_HANDLED) {
+            \header('HTTP/1.1 ' . (string)$status);
+            echo 'Status ' . (string)$status;
+        }
     }
 }
