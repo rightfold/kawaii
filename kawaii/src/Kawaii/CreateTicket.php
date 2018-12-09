@@ -20,18 +20,26 @@ final class CreateTicket {
     }
 
     public function createTicket(string $ticketTitle, string $ticketFacts): Model {
-        $ticketId = Uuid::generateV4();
         try {
-            $this->database->execute('
-                INSERT INTO kawaii.tickets (id, title, facts)
-                VALUES ($1, $2, $3)
-            ', [$ticketId, $ticketTitle, $ticketFacts]);
+            return $this->createTicketInternal($ticketTitle, $ticketFacts);
         } catch (CheckConstraintViolationException $ex) {
-            if ($ex->constraintName === 'tickets_title_not_empty') {
+            if ($ex->constraintName === 'ticket_revisions_title_not_empty') {
                 throw new EmptyTitleException();
             }
             throw $ex;
         }
+    }
+
+    private function createTicketInternal(string $ticketTitle, string $ticketFacts): Model {
+        $ticketId = Uuid::generateV4();
+        $this->database->execute('
+            INSERT INTO kawaii.tickets (id)
+            VALUES ($1)
+        ', [$ticketId]);
+        $this->database->execute('
+            INSERT INTO kawaii.ticket_revisions (ticket_id, revision, title, facts)
+            VALUES ($1, 1, $2, $3)
+        ', [$ticketId, $ticketTitle, $ticketFacts]);
         return new Model($ticketId);
     }
 }

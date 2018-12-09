@@ -3,3 +3,4 @@
 
 schema 2018-12-08T19:59:31Z r <r@chloe-notebook> # Add schema for kawaii
 tickets 2018-12-08T20:00:28Z r <r@chloe-notebook> # Add table for tickets
+ticket-revisions 2018-12-09T19:18:16Z r <r@chloe-notebook> # Add table for ticket revisions

@@ -19,8 +19,10 @@ final class ViewTicketFacts {
     public function viewTicketFacts(string $ticketId): ?Model {
         $result = $this->database->query('
             SELECT title, facts
-            FROM kawaii.tickets
-            WHERE id = $1
+            FROM kawaii.ticket_revisions
+            WHERE ticket_id = $1
+            ORDER BY revision DESC
+            LIMIT 1
         ', [$ticketId]);
         foreach ($result as list($title, $facts)) {
             assert($title !== NULL);
