@@ -1,6 +1,6 @@
 <?php
 declare(strict_types = 1);
-namespace Kawaii\Ticket\Facts\View;
+namespace Kawaii\ViewTicketFacts;
 
 /**
  * Model of the use case <em>View ticket facts</em>.

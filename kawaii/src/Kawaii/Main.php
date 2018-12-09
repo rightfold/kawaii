@@ -2,6 +2,8 @@
 declare(strict_types = 1);
 namespace Kawaii;
 
+use Kawaii\Common\Html;
+
 final class Main {
     public function main(): void {
         /** @var string */
@@ -18,7 +20,7 @@ final class Main {
         $ticketId = (string)$_GET['ticketId'];
 
         $database = new Database\Connection('host=localhost user=kawaii_application password=kawaii_application dbname=kawaii');
-        $ticketFactsView = new Ticket\Facts\View($database);
+        $ticketFactsView = new ViewTicketFacts($database);
         $model = $ticketFactsView->viewTicketFacts($ticketId);
 
         if ($model === NULL) {
@@ -26,7 +28,7 @@ final class Main {
             return;
         }
 
-        $template = new Ticket\Facts\View\Html($model);
+        $template = new ViewTicketFacts\Html($model);
         $this->respondOk($template);
     }
 

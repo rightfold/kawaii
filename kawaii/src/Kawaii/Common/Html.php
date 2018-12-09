@@ -1,6 +1,6 @@
 <?php
 declare(strict_types = 1);
-namespace Kawaii;
+namespace Kawaii\Common;
 
 use Kawaii\Utility\Iterables;
 

@@ -1,13 +1,13 @@
 <?php
 declare(strict_types = 1);
-namespace Kawaii\Ticket\Facts\View;
+namespace Kawaii\ViewTicketFacts;
 
-use Kawaii\Ticket\Html as BaseHtml;
+use Kawaii\Common\TicketHtml;
 
 /**
  * HTML template of the use case <em>View ticket facts</em>.
  */
-final class Html extends BaseHtml {
+final class Html extends TicketHtml {
     /** @var string */
     public $ticketFacts;
 

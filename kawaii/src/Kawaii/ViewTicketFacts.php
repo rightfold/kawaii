@@ -1,14 +1,14 @@
 <?php
 declare(strict_types = 1);
-namespace Kawaii\Ticket\Facts;
+namespace Kawaii;
 
 use Kawaii\Database;
-use Kawaii\Ticket\Facts\View\Model;
+use Kawaii\ViewTicketFacts\Model;
 
 /**
  * Implementation of the use case <em>View ticket facts</em>.
  */
-final class View {
+final class ViewTicketFacts {
     /** @var Database\Connection */
     public $database;
 

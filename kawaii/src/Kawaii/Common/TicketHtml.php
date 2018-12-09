@@ -1,13 +1,11 @@
 <?php
 declare(strict_types = 1);
-namespace Kawaii\Ticket;
-
-use Kawaii\Html as BaseHtml;
+namespace Kawaii\Common;
 
 /**
  * The base class for ticket page HTML templates.
  */
-abstract class Html extends BaseHtml {
+abstract class TicketHtml extends Html {
     public const TICKET_PAGE_FACTS      = 0;
     public const TICKET_PAGE_DISCUSSION = 1;
 
