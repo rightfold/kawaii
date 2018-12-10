@@ -16,15 +16,22 @@ abstract class Html {
         echo '<html>';
         echo '<head>';
         echo '<meta charset="utf-8">';
+        echo '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese">';
+        echo '<link rel="stylesheet" href="/client/kawaii.css">';
         echo '<title>';
         echo \htmlentities(Iterables::implode(' > ', $this->getPageTitle()));
         echo '</title>';
         echo '</head>';
         echo '<body>';
+        echo '<header class="kawaii--header">';
+        echo 'Kawaii';
+        echo '</header>';
+        echo '<section class="kawaii--body">';
         echo '<h1>';
         echo \htmlentities(Iterables::implode(' > ', $this->getPageTitle()));
         echo '</h1>';
         $this->renderPageBody();
+        echo '</section>';
         echo '</body>';
         echo '</html>';
     }

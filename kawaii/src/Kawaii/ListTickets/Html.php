@@ -22,7 +22,7 @@ final class Html extends BaseHtml {
     }
 
     public function renderPageBody(): void {
-        echo '<table>';
+        echo '<table class="kawaii--ticket-list">';
         echo '<tbody>';
         foreach ($this->model as $model) {
             echo '<tr>';

@@ -1,0 +1,70 @@
+@import 'reset';
+
+$gr: 1.61803398875;
+
+$unit: 14px;
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: black;
+    background-image: url('background.jpg');
+    background-size: cover;
+    font-family: Roboto, sans-serif;
+    font-size: $unit;
+}
+
+.kawaii--header, .kawaii--body {
+    margin: $unit * $gr auto;
+    padding: $unit * $gr;
+    width: 64 * $unit * $gr;
+}
+
+.kawaii--header {
+    color: white;
+    font-size: 2 * $unit * $gr;
+    font-weight: bold;
+    line-height: 2 * $unit * $gr;
+    text-align: center;
+    text-shadow: #00000077 0 2px 0px;
+    text-transform: lowercase;
+}
+
+.kawaii--body {
+    background: #00000077;
+    color: white;
+    text-shadow: #00000077 0 1px 0px;
+
+    & > h1 {
+        font-weight: bold;
+        line-height: $unit * $gr;
+    }
+}
+
+.kawaii--ticket-list {
+    border: solid 1px;
+    margin-top: $unit * $gr;
+    width: 100%;
+
+    & > tbody {
+        & > tr:not(:first-child) > td {
+            border-top: solid 1px;
+        }
+
+        & > tr > td:not(:first-child) {
+            border-left: solid 1px;
+        }
+    }
+
+    & > tbody > tr > td {
+        background: #00000077;
+        line-height: $unit * $gr;
+        padding: $unit * $gr / 2;
+
+        & > a {
+            color: inherit;
+        }
+    }
+}
